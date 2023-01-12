@@ -127,6 +127,77 @@ fn bridge(p: &mut Player) -> bool {
 
 
 
-pub fn native_craft(p: &mut Player) {
-	
+pub fn native_craft(p: &mut Player) -> bool {
+	println!("\n\n\t\tLooking for details of the new land to investigate, you come across an abandoned native Indian village.\n\t\tThe place looks deserted, but the entire camp is still intact. There are still workbenches, housing and fire rings in pristine condition.\n\n\t\tWhat do you do?\n\t1. Search for supplies\n\t2. Investigate culture of tribe");
+	loop{
+		let num:u8 =  get_input("\n\n\t\tEnter selection: ");
+		match num {
+		1 => {
+			println!("\n\n\t\tYou search for supplies in and around this abandoned village.");
+			let mut rng = rand::thread_rng();
+			let random = rng.gen_range(0..=3); 
+			if random == 0{
+				println!("\n\t\tYou find some cooked meat laying around. Surprisingly, it seems to just be made and still hot.\n\n\t\t\t\tHUNGER RESTORED");
+				p.add_hunger(40);
+			} else if random == 1 {
+				println!("\n\t\tYou hear the sound of rushing water nearby. Looking for running water, you find out that the tribe was using a nearby river for water.\n\n\t\t\t\t\tTHIRST RESTORED");
+				p.thirst = 100;
+			} else if random == 2 {
+				let fur_amount = rng.gen_range(1..=2);
+				println!("\n\t\tYou look around their campsite and find {fur_amount} fur(s) laying around.");
+				p.furs += fur_amount;
+			} else {
+				println!("\n\t\tYou look around their campsite, but find nothing that could be of use. However, you gain a better understanding of their tribal methods.");
+				p.score += 25;
+			}
+			break;
+		},
+		2 =>{
+			println!("\n\n\t\tYou investigate the tribe's resources and campsite. You find out that they can only use resources available to them, like river water and the current wildlife.\n\t\tThe tribe uses hides from animals as clothes, and use furs as coats.\n\t\tAfter this encounter, you have a better understanding of how native Indians live.");
+			p.score += 75;
+			break;
+		},
+		_ => {println!("\n\n\t\tPlease enter a valid selection.");continue;},
+	}
+}
+next();
+p.score += 50;
+println!("\n\n\t\tSuddenly, you meet what forced these natives to move locations. A bear comes running straight for you.\n\n\t\tMaybe it smelled fear, or maybe it smelled the food you bring with you.\n\n\t\tWhat do you do?\n\t1. Fight back against the bear\n\t2. Throw meat the opposite direction of the bear\n\t3. Stand still");
+loop{
+	let num:u8 = get_input("\n\n\t\tEnter selection: ");
+	match num {
+		1 => {
+			println!("\n\n\t\tWhat is wrong with you? You think that the best way to live against a fullforce bear is to fight it?");
+			let mut rng = rand::thread_rng();
+			if rng.gen_bool(5.0/100.0){ //5% chance of living
+				println!("\n\n\t\tYou pick up a rock nearby, ready to fight back against the bear.\n\t\tAnd it works. What? Well, okay...");
+				return true;
+			} else {
+				println!("\n\n\t\tYou prepare to fight the bear. It takes you by surprise, somehow, by charging straight at you.");
+				p.dead = true;
+				return false;
+			}
+		},
+		2 => {
+			println!("\n\n\t\tYou throw some food you have easily accessible past the bear. It runs excitedly at the food, leaving you be.\n\t\tYou sneakily walk away from it.");
+			p.hunger -= 15;
+			return true;
+		}
+		3 => {
+			println!("\n\n\t\tThe bear still smells food, and it is coming from around you.");
+			let mut rng = rand::thread_rng();
+			if rng.gen_bool(1.0 / 2.0) {
+				println!("\n\n\t\tThe bear steal your bag of food, and runs off. Luckily you survived. Unluckily, your food stash is halved.");
+				p.hunger /= 2;
+				return false;
+			}
+			else {
+				println!("\n\n\t\tThe bear runs its claws through you in an attempt to get at your food. You quickly bleed out.");
+				p.dead = true;
+				return false;
+			}
+		}
+		_ =>{println!("\n\n\t\tPlease enter a valid selection.");continue;},
+	}
+}
 }
