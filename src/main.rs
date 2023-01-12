@@ -40,7 +40,8 @@ fn main() {
 }
 
 fn game(p: &mut Player) {
-	
+	println!("\n\n\t\tYou start your journey by getting a new job from the current president of the United States.\n\t\tHe recently bought a huge chunk of land and he isn't sure what it contains.\n\t\tHe needs a group of people to go out and research the land.\n\n\t\tHe sees you as trustworthy, and allows you to build your own crew.\n\t\tNaturally, you bring your best friend with you.\n\t\tThe party naturally grows as you allow more and more people to join.\n\n\t\tYou start your adventure through the West.");
+
 	let mut first_trail = true;
 	const WEEK_AMOUNT:usize = 4; //amount of days
 	const TURN_AMOUNT:usize = 3; //turns per day
@@ -59,6 +60,7 @@ fn game(p: &mut Player) {
 			let mut selection:u8;
 			loop {
 			println!("\n\n\t\t\t\t\tWEEK {}", i+1);
+			println!("\n\t\t\t\t    Weeks left: {}", (WEEK_AMOUNT- i) + 1);
 			println!("\n\t\t\t\t\tTurn {}\n\n\t\tHunger: ({} / 100)\t\t\tThirst: ({} / 100)\n\n\t\t1. Hunt for food\n\t\t2. Do research on current location\n\t\t3. Continue on trail", j+1, p.hunger, p.thirst);
 			selection = get_input("\tEnter choice for turn: ");
 
