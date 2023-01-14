@@ -39,11 +39,10 @@ pub fn deer(p: &mut Player) -> bool {
 	println!("\n\n\t\tAfter looking for signs of an animal for a while, you come across pellet shaped feces stacked in a pile.\n\t\tOn a closeby tree, you can see marks made into the bark. There also seems to be dead grass in an oval shape on a hill you can see.");
 	loop {
 		println!("\n\n\n\t\tWhat animal is this?\n\t1. White-tailed deer\n\t2. Cottontail rabbit\n\t3. Coyote\n\t4. Beaver");
-		let choice:u8 = get_input("\tEnter option: ");
 		if p.sac == 1 {
-			print!("\t5. Ask Sacagawea for help\n");
-			std::io::stdout().flush().unwrap();
+			println!("\t5. Ask Sacagawea for help");
 		}
+		let choice:u8 = get_input("\tEnter option: ");
 		match choice {
 			1 => 
 			{
