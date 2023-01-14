@@ -102,3 +102,33 @@ pub fn beaver(p: &mut Player) -> bool {
 		}
 	}
 }
+
+pub fn pronghorn(p: &mut Player) -> bool {
+	println!("\n\n\t\tHungry for food and craving new and exciting wildlife, you trek on looking for new prey.\n\n\t\tYou come across a footstep of a hoof that looks remarkably similar to a deer, except that the outside of the track is more concave than usual.\n\t\tYou look for more signs of animals nearby, coming across what also looks like typical deer feces, except a bit flattened.\n\n\t\tWhat animal is this?\n\t1. White-tailed deer\n\t2. Beaver\n\t3. Coyote\n\t4. Pronghorn");
+	if p.sac == 1 {
+		print!("\t5. Ask Sacagawea for help\n");
+		std::io::stdout().flush().unwrap();
+	}
+	loop {
+		let num:u8 = get_input("\n\nEnter choice: ");
+		match num {
+			1 => {println!("\n\n\t\tThinking of a white-tailed deer, you stalk out where you can usually find them.\n\t\tAfter waiting for a long time, you eventually give up.");return false;},
+			2 => {println!("\n\n\t\tThinking of a beaver, you look for a water source nearby.\n\t\tYou look for hours, even getting lost. You find your way back towards your goal and move on.");return false;},
+			3 => {println!("\n\n\t\tYou start hunting for a coyote. Then, you realize that you shouldn't be hunting for a coyote.");return false},
+			4 => {
+				println!("\n\n\t\tYou think this is a new type of animal, and you start following the tracks and find a weird looking deer.\n\t\tWell, it's close enough to a regular deer that it died when you shot it!");
+				p.add_hunger(75);
+				return true;
+			}
+			5 => {
+				if p.sac != 1 {println!("\n\n\tPlease enter a valid choice.");continue;}
+
+				println!("\n\n\t\tShe says these tracks look like a pronghorn, which are very similar to regular white-tailed deer.\n\n\t\tShe knows how to hunt these animals, and instantly finds it and shoots it.");
+				p.sac = 2;
+				p.add_hunger(75);
+				return true;
+			},
+			_ => {println!("\n\n\t\tPlease enter a valid choice.");continue;},
+		}
+	}
+}

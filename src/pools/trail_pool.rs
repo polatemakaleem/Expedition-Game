@@ -7,7 +7,7 @@ use crate::functions::*;
 
 
 pub fn fur_trader(p: &mut Player) -> bool {
-	println!("\n\n\tAfter travelling on foot for hours, making sure to document your travels, you come across what seems to be a merchant\n\tselling animal furs. He comes up to you, trying to sell his stock.");
+	println!("\n\n\tAfter travelling on foot for hours, making sure to document your travels, you come across what seems to be a white merchant\n\tselling animal furs. He comes up to you, trying to sell his stock.");
 	loop {
 		println!("\n\tHow many furs do you want to buy? Each fur is 25 money.\t\tMONEY: {}", p.money);
 		let amount:u16 = get_input("\nEnter amount: ");
@@ -299,7 +299,7 @@ pub fn unfriendly_village(p: &mut Player) -> bool {
 							p.thirst = 100;
 							return true; 
 						},
-						2 => {return let_go(p);}
+						2 => {println!("\n\n\t\tYou say you change your mind, and instead just want to walk away. The chief allows you to leave the property.\n\n\t\tWhat do you do?\n\t1. Leave the property\n\t2. Try to steal supplies"); return let_go(p);}
 						_ => {println!("\n\n\t\tPlease enter a valid selection. ");continue;},
 					}
 				}
