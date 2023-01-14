@@ -25,6 +25,14 @@ fn main() {
 
 		println!("\n\n\t\t\t\t      FINAL SCORE: {}\n\n", p.score);
 
+		next();
+		if p.dead {
+			println!("\n\n\t\tYour objective fails and you die in obscurity. The president, scared that you died in the West, decides to not let anyone move to the West for the duration of his term as president.\n\t\tThis leads to the United States not growing as a country until its too late. The United States gets invaded by Spain and meets its end.\n\t\t\t\t\tGAME OVER");		
+		} else if p.score <= 500 {
+			println!("\n\n\t\tYou make it back home from your adventure, but you didn't learn much about this new territory.\n\t\tThe president allows access, but hesitantly. The fact that people knew less about the new lands meant that there were more casualties.\n\n\t\t\t\t\tGAME OVER");
+		} else {
+			println!("\n\n\t\tYou make it back home and you are hailed as gods amongst men. The president is extremely happy with your work, and happily allows people to move out to the West.\n\t\tNot only does he allow people to move over, he also makes the land completely free of charge.");
+		}
 		loop {
 			println!("\t\tDo you want to try again? (y/n)");
 			let response:String = get_input("\nENTER RESPONSE (Y/N): ");
@@ -60,14 +68,18 @@ fn game(p: &mut Player) {
 			let mut selection:u8;
 			loop {
 			println!("\n\n\t\t\t\t\tWEEK {}", i+1);
-			println!("\n\t\t\t\t    Weeks left: {}", (WEEK_AMOUNT- i) + 1);
+			println!("\n\t\t\t\t    Weeks left: {}", (WEEK_AMOUNT- i));
 			println!("\n\t\t\t\t\tTurn {}\n\n\t\tHunger: ({} / 100)\t\t\tThirst: ({} / 100)\n\n\t\t1. Hunt for food\n\t\t2. Do research on current location\n\t\t3. Continue on trail", j+1, p.hunger, p.thirst);
 			selection = get_input("\tEnter choice for turn: ");
 
+			
+
 			pass = match selection { //pass = if they succeeded for failed on event
-				1 => {if first_trail {println!("\n\n\t\tPlease start the expedition by Continuing on the trail.");continue;} hunt(rng.gen_range(1..=3), p)}, //hunt with random event from hunt pool
-				2 => {if first_trail {println!("\n\n\t\tPlease start the expedition by Continuing on the trail.");continue;} research(rng.gen_range(1..=3), p)}, //research with random event from research pool
+				1 => {if first_trail {println!("\n\n\t\tPlease start the expedition by Continuing on the trail.");continue;} p.hunger -= 20; p.thirst -= 20; hunt(rng.gen_range(1..=3), p)}, //hunt with random event from hunt pool
+				2 => {if first_trail {println!("\n\n\t\tPlease start the expedition by Continuing on the trail.");continue;} p.hunger -= 20; p.thirst -= 20; research(rng.gen_range(1..=3), p)}, //research with random event from research pool
 				3 => {
+					p.hunger -= 20;
+					p.thirst -= 20;
 					if first_trail {
 						println!("\n\n\tBefore beginning your journey, a man named Toussaint Charbonneau proposes he joins.\n\tHe says he knows English and enough native tongue to be able to translate between the two. He asks if he can join.");
 						loop {
@@ -90,8 +102,7 @@ fn game(p: &mut Player) {
 			};
 			break;
 		}
-			p.hunger -= 20;
-			p.thirst -= 20;
+			
 			
 			if !pass {
 				println!("\n\n\t\t\t\t\tEVENT FAILED.");
@@ -112,10 +123,12 @@ fn game(p: &mut Player) {
 
 			if p.hunger <= 0 {
 				println!("\n\n\t\t\t\t\tYOU DIED FROM STARVATION.");
+				p.dead =true;
 				return;
 			}
 			if p.thirst <= 0 {
 				println!("\n\n\t\t\t\t\tYOU DIED FROM THIRST.");
+				p.dead = true;
 				return;
 			}
 			p.score += 20;
